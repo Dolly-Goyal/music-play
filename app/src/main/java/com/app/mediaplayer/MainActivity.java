@@ -17,12 +17,17 @@ public class MainActivity extends Activity {
 
 //MeddiaPlayer object mysound
     MediaPlayer mySound;
+
+    protected void onPause() {
+        super.onPause();
+        mySound.release();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+    //call song
         mySound = MediaPlayer.create(this,R.raw.track );
     }
     public void playMusic(View view){
