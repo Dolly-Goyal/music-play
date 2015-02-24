@@ -1,59 +1,51 @@
 package com.app.mediaplayer;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.media.Image;
 import android.media.MediaPlayer;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.internal.widget.AdapterViewCompat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainActivity extends Activity {
+    Button showPlayButton;
 
-//MeddiaPlayer object mysound
-    MediaPlayer mySound;
-
-    protected void onPause() {
-        super.onPause();
-        mySound.release();
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-    //call song
-        mySound = MediaPlayer.create(this,R.raw.track );
-    }
-    public void playMusic(View view){
-        mySound.start();
+        showPlayButton = (Button) findViewById(R.id.showPlayButton);
+        final MediaPlayer mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.track);
+
+        showPlayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediaPlayer.start();
+                Intent intent = new Intent(MainActivity.this, SlideShow.class);
+                startActivity(intent);
+
+            }
+        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 }
